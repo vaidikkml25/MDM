@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Resume</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    header, footer { text-align: center; background: #333; color: #fff; padding: 10px; }
+    nav { text-align: center; margin: 10px 0; }
+    nav a { margin: 0 8px; text-decoration: none; color: #333; }
+    main { display: flex; }
+    section { flex: 3; padding: 10px; }
+    aside { flex: 1; background: #f4f4f4; padding: 10px; }
+    h2 { border-bottom: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Vaidik Katre</h1>
+    <p>Web Developer</p>
+  </header>
+
+  <nav>
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <main>
+    <section>
+      <article id="about">
+        <h2>About</h2>
+        <p>Creative developer with a passion for coding.</p>
+      </article>
+
+      <article id="experience">
+        <h2>Experience</h2>
+        <p>Frontend Developer at ABC Corp (2019–Present)</p>
+      </article>
+
+      <article id="skills">
+        <h2>Skills</h2>
+        <ul>
+          <li>HTML5 & CSS3</li>
+          <li>JavaScript</li>
+          <li>React</li>
+        </ul>
+      </article>
+    </section>
+
+    <aside id="contact">
+      <h2>Contact</h2>
+      <p>Email: vaidikk.ml@sbjit.com</p>
+      <p>Phone: +91 9876543210</p>
+    </aside>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Vaidik Katre</p>
+  </footer>
+
+</body>
+</html>
