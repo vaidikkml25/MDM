@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>College FAQ Portal</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .faq {
+            width: 70%;
+            margin: 15px auto;
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px gray;
+        }
+
+        .question {
+            font-weight: bold;
+            cursor: pointer;
+            color: #1a4d80;
+        }
+
+        .answer {
+            display: none;
+            margin-top: 10px;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>College Help Portal - FAQ</h1>
+
+    <div class="faq">
+        <div class="question">1. How can I apply for admission?</div>
+        <div class="answer">
+            You can apply for admission by filling out the admission form
+            and submitting the required documents.
+        </div>
+    </div>
+
+    <div class="faq">
+        <div class="question">2. Where can I check my exam timetable?</div>
+        <div class="answer">
+            You can check the examination timetable on the college website
+            or student portal.
+        </div>
+    </div>
+
+    <div class="faq">
+        <div class="question">3. Where can I find study materials?</div>
+        <div class="answer">
+            Study materials are available on the student portal and
+            department learning platform.
+        </div>
+    </div>
+
+    <div class="faq">
+        <div class="question">4. How can I contact the department?</div>
+        <div class="answer">
+            You can contact the department through the official email
+            address or department office.
+        </div>
+    </div>
+
+    <script>
+        // Select all questions
+        const questions = document.querySelectorAll(".question");
+
+        // Add click event to every question
+        questions.forEach(function(question) {
+
+            question.addEventListener("click", function() {
+
+                // Get the answer of clicked question
+                const answer = this.nextElementSibling;
+
+                // Display or hide the answer
+                if (answer.style.display === "block") {
+                    answer.style.display = "none";
+                } else {
+                    answer.style.display = "block";
+                }
+
+            });
+
+        });
+    </script>
+
+</body>
+</html>
