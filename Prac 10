@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Runway – Student Budget Tracker</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="wrap">
+
+  <header>
+    <h1>Runway</h1>
+    <p class="muted">See how many days your money lasts this month.</p>
+  </header>
+
+  <section class="hero" aria-live="polite">
+    <div class="hero-top">
+      <div>
+        <p id="runwayLabel" class="hero-sub">Add your first expense to see your runway.</p>
+        <p><span id="runwayDays" class="days">–</span> <span class="hero-sub">days</span></p>
+      </div>
+      <label class="limit">Monthly spending limit
+        <span class="limit-box">$<input id="budget" type="number" min="0" step="10" aria-label="Monthly spending limit"></span>
+      </label>
+    </div>
+    <div class="track" role="progressbar" id="progressWrap" aria-label="Budget used" aria-valuemin="0" aria-valuemax="100">
+      <div id="progress" class="fill"></div>
+    </div>
+    <div class="hero-stats">
+      <span>Spent <b id="spent">$0</b></span>
+      <span>Left <b id="left">$0</b></span>
+    </div>
+  </section>
+
+  <div class="grid">
+    <div class="stack">
+      <form id="form" class="card" novalidate>
+        <h2>Add a transaction</h2>
+        <div class="toggle" role="radiogroup" aria-label="Type">
+          <label><input type="radio" name="type" value="expense" checked><span class="exp">Expense</span></label>
+          <label><input type="radio" name="type" value="income"><span class="inc">Income</span></label>
+        </div>
+        <label for="amount">Amount ($)</label>
+        <input id="amount" type="number" min="0.01" step="0.01" inputmode="decimal">
+        <div class="two">
+          <div><label for="category">Category</label><select id="category"></select></div>
+          <div><label for="date">Date</label><input id="date" type="date"></div>
+        </div>
+        <label for="note">Note (optional)</label>
+        <input id="note" type="text" maxlength="40">
+        <p id="error" class="error" role="alert" hidden>Enter an amount greater than 0.</p>
+        <button class="primary">Add transaction</button>
+      </form>
+
+      <section class="card">
+        <h2>Where it went this month</h2>
+        <div id="breakdown"></div>
+      </section>
+    </div>
+
+    <section class="card">
+      <div class="list-head">
+        <h2>Transactions</h2>
+        <div class="filters">
+          <select id="filterType" aria-label="Filter by type">
+            <option value="all">All types</option><option value="expense">Expenses</option><option value="income">Income</option>
+          </select>
+          <select id="filterCat" aria-label="Filter by category"></select>
+        </div>
+      </div>
+      <ul id="list"></ul>
+      <div class="list-foot">
+        <span>Money in this month: <b id="income" class="pos">$0</b></span>
+        <button id="clear" class="link">Clear all</button>
+      </div>
+    </section>
+  </div>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
