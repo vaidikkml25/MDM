@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PocketPilot — Student Finance</title>
+
+<style>
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #0b0f19;
+    --card: #121827;
+    --card2: #171e2f;
+    --border: #252e42;
+
+    --text: #f5f7fb;
+    --muted: #8993a7;
+
+    --purple: #7c5cff;
+    --purple2: #9b7cff;
+
+    --green: #31d69b;
+    --red: #ff6178;
+    --yellow: #ffc857;
+
+    --radius: 20px;
+}
+
+body {
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 20% 0%,
+            rgba(124, 92, 255, .18),
+            transparent 30%
+        ),
+        var(--bg);
+
+    color: var(--text);
+    min-height: 100vh;
+}
+
+
+/* =========================
+   APP
+========================= */
+
+.app {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: 100vh;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+    position: sticky;
+    top: 0;
+
+    height: 100vh;
+
+    padding: 28px 18px;
+
+    border-right: 1px solid var(--border);
+
+    background: rgba(11,15,25,.85);
+
+    backdrop-filter: blur(15px);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 0 12px;
+
+    margin-bottom: 40px;
+
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.logo-icon {
+    display: grid;
+    place-items: center;
+
+    width: 36px;
+    height: 36px;
+
+    border-radius: 11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--purple),
+            var(--purple2)
+        );
+
+    box-shadow:
+        0 8px 25px
+        rgba(124,92,255,.35);
+}
+
+.nav {
+    display: grid;
+    gap: 7px;
+}
+
+.nav button {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 12px;
+
+    border: 0;
+    border-radius: 12px;
+
+    background: transparent;
+
+    color: var(--muted);
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.nav button:hover,
+.nav button.active {
+    color: white;
+    background: var(--card2);
+}
+
+.nav button.active {
+    box-shadow:
+        inset 3px 0 var(--purple);
+}
+
+.sidebar-bottom {
+    position: absolute;
+
+    left: 18px;
+    right: 18px;
+    bottom: 25px;
+
+    padding: 15px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 16px;
+
+    background: var(--card);
+}
+
+.sidebar-bottom small {
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 10px;
+
+    margin-bottom: 5px;
+}
+
+.sidebar-bottom strong {
+    font-size: 13px;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.main {
+    width: 100%;
+    max-width: 1250px;
+
+    margin: auto;
+
+    padding: 35px 40px;
+}
+
+
+/* =========================
+   TOP BAR
+========================= */
+
+.topbar {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 30px;
+}
+
+.greeting small {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.greeting h1 {
+    margin-top: 4px;
+
+    font-size: 28px;
+
+    letter-spacing: -1px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7c5cff,
+            #c084fc
+        );
+
+    font-weight: 800;
+}
+
+
+/* =========================
+   BALANCE
+========================= */
+
+.balance-grid {
+    display: grid;
+
+    grid-template-columns:
+        1.4fr
+        1fr
+        1fr;
+
+    gap: 18px;
+
+    margin-bottom: 18px;
+}
+
+.balance-card {
+    position: relative;
+
+    overflow: hidden;
+
+    min-height: 190px;
+
+    padding: 25px;
+
+    border-radius: var(--radius);
+
+    background:
+        linear-gradient(
+            135deg,
+            #6246e5,
+            #35239a
+        );
+
+    box-shadow:
+        0 20px 50px
+        rgba(74,55,180,.25);
+}
+
+.balance-card::after {
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    right: -70px;
+    bottom: -90px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.08);
+}
+
+.balance-card span {
+    color: rgba(255,255,255,.65);
+
+    font-size: 12px;
+}
+
+.balance-card h2 {
+    margin-top: 15px;
+
+    font-size: 42px;
+
+    letter-spacing: -2px;
+}
+
+.balance-card p {
+    margin-top: 10px;
+
+    color: rgba(255,255,255,.65);
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   SMALL STATS
+========================= */
+
+.stat-card {
+    padding: 23px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: var(--radius);
+
+    background: var(--card);
+}
+
+.stat-top {
+    display: flex;
+
+    justify-content: space-between;
+}
+
+.stat-icon {
+    width: 40px;
+    height: 40px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 12px;
+
+    background: var(--card2);
+
+    font-size: 18px;
+}
+
+.stat-card span {
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+.stat-card h3 {
+    margin-top: 18px;
+
+    font-size: 24px;
+}
+
+.green {
+    color: var(--green);
+}
+
+.red {
+    color: var(--red);
+}
+
+
+/* =========================
+   CONTENT GRID
+========================= */
+
+.content-grid {
+    display: grid;
+
+    grid-template-columns:
+        1.3fr
+        .7fr;
+
+    gap: 18px;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.card {
+    padding: 23px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: var(--radius);
+
+    background: var(--card);
+}
+
+.card-title {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+.card-title h2 {
+    font-size: 16px;
+}
+
+.card-title span {
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+
+/* =========================
+   CHART
+========================= */
+
+.chart {
+    height: 220px;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    gap: 12px;
+
+    padding: 15px 5px;
+}
+
+.bar {
+    flex: 1;
+
+    min-width: 20px;
+
+    height: 50%;
+
+    border-radius:
+        8px 8px 3px 3px;
+
+    background:
+        linear-gradient(
+            180deg,
+            var(--purple2),
+            var(--purple)
+        );
+
+    transition: .3s;
+}
+
+.bar:hover {
+    transform:
+        translateY(-6px);
+
+    filter: brightness(1.2);
+}
+
+.chart-labels {
+    display: flex;
+
+    justify-content: space-between;
+
+    color: var(--muted);
+
+    font-size: 10px;
+}
+
+
+/* =========================
+   SAVINGS
+========================= */
+
+.goal {
+    padding: 18px;
+
+    border-radius: 15px;
+
+    background: var(--card2);
+
+    margin-bottom: 14px;
+}
+
+.goal-head {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 12px;
+}
+
+.goal-head strong {
+    font-size: 13px;
+}
+
+.goal-head span {
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+.goal-bar {
+    height: 8px;
+
+    border-radius: 20px;
+
+    background: #252d40;
+
+    overflow: hidden;
+}
+
+.goal-fill {
+    width: 68%;
+
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--green),
+            #6ee7b7
+        );
+}
+
+.goal-bottom {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-top: 10px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+}
+
+
+/* =========================
+   HEALTH
+========================= */
+
+.health {
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+.score {
+    width: 100px;
+    height: 100px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    background:
+        conic-gradient(
+            var(--green) 0 78%,
+            #293246 78% 100%
+        );
+}
+
+.score-inner {
+    width: 76px;
+    height: 76px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    background: var(--card);
+
+    font-size: 22px;
+
+    font-weight: 800;
+}
+
+.health-text h3 {
+    font-size: 15px;
+
+    margin-bottom: 6px;
+}
+
+.health-text p {
+    color: var(--muted);
+
+    font-size: 11px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================
+   TRANSACTIONS
+========================= */
+
+.transactions {
+    margin-top: 18px;
+}
+
+.transaction {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 13px 0;
+
+    border-bottom:
+        1px solid
+        var(--border);
+}
+
+.transaction:last-child {
+    border-bottom: 0;
+}
+
+.transaction-left {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+.transaction-icon {
+    width: 38px;
+    height: 38px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 11px;
+
+    background: #20283a;
+}
+
+.transaction-info strong {
+    display: block;
+
+    font-size: 12px;
+}
+
+.transaction-info span {
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+}
+
+.amount {
+    font-size: 12px;
+
+    font-weight: 800;
+}
+
+
+/* =========================
+   QUICK ADD
+========================= */
+
+.form {
+    display: grid;
+
+    gap: 12px;
+}
+
+.form input,
+.form select {
+    width: 100%;
+
+    height: 43px;
+
+    padding: 0 12px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 10px;
+
+    outline: 0;
+
+    background: var(--card2);
+
+    color: white;
+}
+
+.form input:focus,
+.form select:focus {
+    border-color: var(--purple);
+}
+
+.add-btn {
+    height: 44px;
+
+    border: 0;
+
+    border-radius: 11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--purple),
+            var(--purple2)
+        );
+
+    color: white;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.add-btn:hover {
+    transform:
+        translateY(-2px);
+}
+
+
+/* =========================
+   MOBILE NAV
+========================= */
+
+.mobile-nav {
+    display: none;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width: 950px) {
+
+    .app {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .main {
+        padding: 25px 18px 90px;
+    }
+
+    .balance-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .balance-card {
+        grid-column: span 2;
+    }
+
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .mobile-nav {
+        position: fixed;
+
+        display: flex;
+
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+
+        height: 62px;
+
+        z-index: 100;
+
+        justify-content: space-around;
+        align-items: center;
+
+        border:
+            1px solid
+            var(--border);
+
+        border-radius: 18px;
+
+        background:
+            rgba(18,24,39,.92);
+
+        backdrop-filter: blur(15px);
+    }
+
+    .mobile-nav button {
+        border: 0;
+
+        background: transparent;
+
+        color: var(--muted);
+
+        font-size: 18px;
+    }
+
+    .mobile-nav button.active {
+        color: var(--purple2);
+    }
+}
+
+
+@media(max-width: 600px) {
+
+    .topbar {
+        margin-bottom: 22px;
+    }
+
+    .greeting h1 {
+        font-size: 23px;
+    }
+
+    .profile {
+        display: none;
+    }
+
+    .balance-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .balance-card {
+        grid-column: auto;
+    }
+
+    .stat-card {
+        min-height: 130px;
+    }
+
+    .balance-card h2 {
+        font-size: 37px;
+    }
+
+    .health {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .chart {
+        height: 180px;
+        gap: 7px;
+    }
+}
+</style>
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">₹</div>
+            PocketPilot
+        </div>
+
+
+        <nav class="nav">
+
+            <button class="active">
+                🏠
+                Dashboard
+            </button>
+
+            <button>
+                💳
+                Transactions
+            </button>
+
+            <button>
+                🎯
+                Savings
+            </button>
+
+            <button>
+                📊
+                Analytics
+            </button>
+
+            <button>
+                ⚙️
+                Settings
+            </button>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <small>MONTHLY TARGET</small>
+
+            <strong>
+                Keep spending below ₹15,000
+            </strong>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+
+        <!-- TOP -->
+
+        <header class="topbar">
+
+            <div class="greeting">
+
+                <small>
+                    Monday, October 21
+                </small>
+
+                <h1>
+                    Good morning 👋
+                </h1>
+
+            </div>
+
+
+            <div class="profile">
+
+                <div>
+                    <small style="color:#8993a7">
+                        Student
+                    </small>
+
+                    <div style="font-size:12px">
+                        Ashish
+                    </div>
+                </div>
+
+                <div class="avatar">
+                    A
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ================= BALANCE ================= -->
+
+        <section class="balance-grid">
+
+
+            <div class="balance-card">
+
+                <span>
+                    AVAILABLE BALANCE
+                </span>
+
+                <h2 id="balance">
+                    ₹12,450
+                </h2>
+
+                <p>
+                    You're on track with your monthly budget.
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <span>
+                        INCOME
+                    </span>
+
+                    <div class="stat-icon">
+                        ↗️
+                    </div>
+
+                </div>
+
+                <h3 class="green">
+                    ₹18,000
+                </h3>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <span>
+                        SPENT
+                    </span>
+
+                    <div class="stat-icon">
+                        ↘️
+                    </div>
+
+                </div>
+
+                <h3 class="red">
+                    ₹5,550
+                </h3>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ================= CONTENT ================= -->
+
+        <section class="content-grid">
+
+
+            <!-- LEFT -->
+
+            <div>
+
+
+                <!-- CHART -->
+
+                <section class="card">
+
+                    <div class="card-title">
+
+                        <h2>
+                            Spending overview
+                        </h2>
+
+                        <span>
+                            This week
+                        </span>
+
+                    </div>
+
+
+                    <div class="chart">
+
+                        <div
+                            class="bar"
+                            style="height:45%"
+                        ></div>
+
+                        <div
+                            class="bar"
+                            style="height:70%"
+                        ></div>
+
+                        <div
+                            class="bar"
+                            style="height:35%"
+                        ></div>
+
+                        <div
+                            class="bar"
+                            style="height:82%"
+                        ></div>
+
+                        <div
+                            class="bar"
+                            style="height:55%"
+                        ></div>
+
+                        <div
+                            class="bar"
+                            style="height:92%"
+                        ></div>
+
+                        <div
+                            class="bar"
+                            style="height:40%"
+                        ></div>
+
+                    </div>
+
+
+                    <div class="chart-labels">
+
+                        <span>Mon</span>
+                        <span>Tue</span>
+                        <span>Wed</span>
+                        <span>Thu</span>
+                        <span>Fri</span>
+                        <span>Sat</span>
+                        <span>Sun</span>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- TRANSACTIONS -->
+
+                <section class="card transactions">
+
+                    <div class="card-title">
+
+                        <h2>
+                            Recent transactions
+                        </h2>
+
+                        <span>
+                            View all →
+                        </span>
+
+                    </div>
+
+
+                    <div id="transactions">
+
+
+                        <div class="transaction">
+
+                            <div class="transaction-left">
+
+                                <div class="transaction-icon">
+                                    🍔
+                                </div>
+
+                                <div class="transaction-info">
+
+                                    <strong>
+                                        College Canteen
+                                    </strong>
+
+                                    <span>
+                                        Food • Today
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="amount red">
+                                -₹180
+                            </div>
+
+                        </div>
+
+
+                        <div class="transaction">
+
+                            <div class="transaction-left">
+
+                                <div class="transaction-icon">
+                                    🚌
+                                </div>
+
+                                <div class="transaction-info">
+
+                                    <strong>
+                                        Bus Pass
+                                    </strong>
+
+                                    <span>
+                                        Transport • Yesterday
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="amount red">
+                                -₹500
+                            </div>
+
+                        </div>
+
+
+                        <div class="transaction">
+
+                            <div class="transaction-left">
+
+                                <div class="transaction-icon">
+                                    💻
+                                </div>
+
+                                <div class="transaction-info">
+
+                                    <strong>
+                                        Freelance Work
+                                    </strong>
+
+                                    <span>
+                                        Income • Yesterday
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="amount green">
+                                +₹2,500
+                            </div>
+
+                        </div>
+
+
+                        <div class="transaction">
+
+                            <div class="transaction-left">
+
+                                <div class="transaction-icon">
+                                    📚
+                                </div>
+
+                                <div class="transaction-info">
+
+                                    <strong>
+                                        Programming Book
+                                    </strong>
+
+                                    <span>
+                                        Education • Oct 18
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="amount red">
+                                -₹650
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </section>
+
+
+            </div>
+
+
+
+            <!-- RIGHT -->
+
+            <div>
+
+
+                <!-- QUICK ADD -->
+
+                <section class="card">
+
+                    <div class="card-title">
+
+                        <h2>
+                            Quick expense
+                        </h2>
+
+                        <span>
+                            + Add
+                        </span>
+
+                    </div>
+
+
+                    <form
+                        class="form"
+                        id="expenseForm"
+                    >
+
+                        <input
+                            id="expenseName"
+                            type="text"
+                            placeholder="What did you spend on?"
+                            required
+                        >
+
+
+                        <input
+                            id="expenseAmount"
+                            type="number"
+                            placeholder="Amount ₹"
+                            min="1"
+                            required
+                        >
+
+
+                        <select id="expenseCategory">
+
+                            <option>
+                                Food
+                            </option>
+
+                            <option>
+                                Transport
+                            </option>
+
+                            <option>
+                                Education
+                            </option>
+
+                            <option>
+                                Entertainment
+                            </option>
+
+                            <option>
+                                Shopping
+                            </option>
+
+                            <option>
+                                Other
+                            </option>
+
+                        </select>
+
+
+                        <button
+                            class="add-btn"
+                            type="submit"
+                        >
+                            Add expense
+                        </button>
+
+                    </form>
+
+                </section>
+
+
+
+                <!-- SAVINGS -->
+
+                <section class="card" style="margin-top:18px">
+
+                    <div class="card-title">
+
+                        <h2>
+                            Savings goal
+                        </h2>
+
+                        <span>
+                            🎯
+                        </span>
+
+                    </div>
+
+
+                    <div class="goal">
+
+                        <div class="goal-head">
+
+                            <strong>
+                                New Laptop
+                            </strong>
+
+                            <span>
+                                68%
+                            </span>
+
+                        </div>
+
+
+                        <div class="goal-bar">
+
+                            <div
+                                class="goal-fill"
+                            ></div>
+
+                        </div>
+
+
+                        <div class="goal-bottom">
+
+                            <span>
+                                ₹34,000 saved
+                            </span>
+
+                            <span>
+                                ₹50,000
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- HEALTH -->
+
+                <section class="card" style="margin-top:18px">
+
+                    <div class="card-title">
+
+                        <h2>
+                            Financial health
+                        </h2>
+
+                        <span>
+                            This month
+                        </span>
+
+                    </div>
+
+
+                    <div class="health">
+
+                        <div class="score">
+
+                            <div class="score-inner">
+                                78
+                            </div>
+
+                        </div>
+
+
+                        <div class="health-text">
+
+                            <h3>
+                                Looking good! 🌱
+                            </h3>
+
+                            <p>
+                                You're spending less than
+                                your monthly target.
+                                Keep it up!
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- MOBILE NAV -->
+
+<nav class="mobile-nav">
+
+    <button class="active">
+        🏠
+    </button>
+
+    <button>
+        💳
+    </button>
+
+    <button>
+        🎯
+    </button>
+
+    <button>
+        📊
+    </button>
+
+    <button>
+        ⚙️
+    </button>
+
+</nav>
+
+
+
+<script>
+
+/* =====================================
+   POCKETPILOT JAVASCRIPT
+===================================== */
+
+
+let balance = 12450;
+let spent = 5550;
+
+
+const balanceElement =
+    document.getElementById("balance");
+
+
+const form =
+    document.getElementById("expenseForm");
+
+
+const transactions =
+    document.getElementById("transactions");
+
+
+/* ---------- ADD EXPENSE ---------- */
+
+form.addEventListener(
+    "submit",
+    function(event) {
+
+        event.preventDefault();
+
+
+        const name =
+            document.getElementById(
+                "expenseName"
+            ).value.trim();
+
+
+        const amount =
+            Number(
+                document.getElementById(
+                    "expenseAmount"
+                ).value
+            );
+
+
+        const category =
+            document.getElementById(
+                "expenseCategory"
+            ).value;
+
+
+        if (!name || amount <= 0) {
+
+            alert(
+                "Please enter a valid expense."
+            );
+
+            return;
+        }
+
+
+        /* Update balance */
+
+        balance -= amount;
+
+        spent += amount;
+
+
+        balanceElement.textContent =
+            formatCurrency(balance);
+
+
+        /* Create transaction */
+
+        const transaction =
+            document.createElement("div");
+
+
+        transaction.className =
+            "transaction";
+
+
+        transaction.innerHTML = `
+
+            <div class="transaction-left">
+
+                <div class="transaction-icon">
+                    ${getIcon(category)}
+                </div>
+
+                <div class="transaction-info">
+
+                    <strong>
+                        ${escapeHTML(name)}
+                    </strong>
+
+                    <span>
+                        ${category} • Just now
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="amount red">
+                -${formatCurrency(amount)}
+            </div>
+
+        `;
+
+
+        transactions.prepend(
+            transaction
+        );
+
+
+        /* Clear form */
+
+        form.reset();
+
+    }
+);
+
+
+/* ---------- ICONS ---------- */
+
+function getIcon(category) {
+
+    const icons = {
+
+        Food: "🍔",
+
+        Transport: "🚌",
+
+        Education: "📚",
+
+        Entertainment: "🎮",
+
+        Shopping: "🛍️",
+
+        Other: "📦"
+
+    };
+
+
+    return icons[category] || "💸";
+}
+
+
+/* ---------- CURRENCY ---------- */
+
+function formatCurrency(value) {
+
+    return "₹" +
+        Number(value)
+            .toLocaleString("en-IN");
+
+}
+
+
+/* ---------- SECURITY ---------- */
+
+function escapeHTML(value) {
+
+    return value
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+</script>
+
+</body>
+</html>
