@@ -1,904 +1,349 @@
-/* =========================
-   RUNWAY — MODERN UI
-   ========================= */
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
-:root {
-  --bg: #f5f7fb;
-  --surface: #ffffff;
-  --surface-soft: #f8fafc;
-
-  --text: #172033;
-  --muted: #718096;
-
-  --primary: #635bff;
-  --primary-dark: #5148e5;
-  --primary-soft: #eeecff;
-
-  --green: #16a673;
-  --green-soft: #e8f8f1;
-
-  --red: #e05252;
-  --red-soft: #fff0f0;
-
-  --border: #e8ebf2;
-  --shadow: 0 12px 35px rgba(30, 41, 59, 0.07);
-
-  --radius: 20px;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  font-family: "Inter", sans-serif;
-  background:
-    radial-gradient(circle at top left, #eeecff 0, transparent 28%),
-    var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="Runway - a simple student budget tracker"
+  >
+
+  <title>Runway — Student Budget Tracker</title>
 
-/* =========================
-   MAIN CONTAINER
-   ========================= */
-
-.wrap {
-  width: min(1180px, calc(100% - 32px));
-  margin: 0 auto;
-  padding: 42px 0 60px;
-}
-
-/* =========================
-   HEADER
-   ========================= */
-
-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 28px;
-}
-
-header h1 {
-  margin: 0;
-  font-size: clamp(32px, 5vw, 48px);
-  line-height: 1;
-  font-weight: 800;
-  letter-spacing: -2px;
+  <link rel="stylesheet" href="style.css">
+</head>
 
-  background: linear-gradient(
-    135deg,
-    #635bff,
-    #8b5cf6
-  );
+<body>
 
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
+  <main class="container">
 
-header p {
-  margin: 8px 0 2px;
-}
+    <!-- Header -->
+    <header class="header">
+      <div>
+        <span class="brand-badge">💰 Student Finance</span>
+        <h1>Runway</h1>
+        <p>See how long your money can last this month.</p>
+      </div>
 
-.muted {
-  color: var(--muted);
-  font-size: 14px;
-}
+      <div class="month">
+        <span id="currentMonth">October 2026</span>
+      </div>
+    </header>
 
-/* =========================
-   HERO
-   ========================= */
 
-.hero {
-  position: relative;
-  overflow: hidden;
+    <!-- Dashboard -->
+    <section class="dashboard">
 
-  padding: 30px;
+      <!-- Runway Card -->
+      <article class="runway-card">
 
-  border-radius: 28px;
+        <div class="runway-content">
 
-  background:
-    radial-gradient(circle at 85% 10%, rgba(139, 92, 246, 0.3), transparent 30%),
-    linear-gradient(135deg, #171b35, #272258);
+          <div>
+            <span class="eyebrow">YOUR RUNWAY</span>
 
-  color: white;
+            <h2>
+              <span id="runwayDays">0</span>
+              <small>days</small>
+            </h2>
 
-  box-shadow:
-    0 20px 50px rgba(37, 29, 100, 0.18);
+            <p id="runwayMessage">
+              Add your budget and expenses to get started.
+            </p>
+          </div>
 
-  margin-bottom: 24px;
-}
+          <div class="budget-input">
+            <label for="budget">Monthly Budget</label>
 
-.hero::before {
-  content: "";
-  position: absolute;
+            <div class="money-input">
+              <span>$</span>
+              <input
+                id="budget"
+                type="number"
+                min="0"
+                step="10"
+                placeholder="1000"
+              >
+            </div>
+          </div>
 
-  width: 180px;
-  height: 180px;
+        </div>
 
-  right: -70px;
-  bottom: -90px;
 
-  border-radius: 50%;
+        <!-- Progress -->
+        <div class="progress-section">
 
-  background: rgba(255, 255, 255, 0.08);
-}
+          <div class="progress-info">
+            <span>Budget used</span>
+            <strong id="percentage">0%</strong>
+          </div>
 
-.hero-top {
-  position: relative;
-  z-index: 1;
+          <div
+            class="progress-track"
+            role="progressbar"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+          >
+            <div id="progress" class="progress-fill"></div>
+          </div>
 
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+        </div>
 
-  gap: 30px;
-}
 
-.hero-sub {
-  margin: 0 0 6px;
-  color: rgba(255, 255, 255, 0.68);
-  font-size: 14px;
-}
+        <!-- Stats -->
+        <div class="hero-stats">
 
-.days {
-  display: inline-block;
+          <div>
+            <span>Spent</span>
+            <strong id="spent">$0.00</strong>
+          </div>
 
-  font-size: clamp(46px, 7vw, 68px);
-  line-height: 1;
-  font-weight: 800;
-  letter-spacing: -4px;
+          <div>
+            <span>Remaining</span>
+            <strong id="left">$0.00</strong>
+          </div>
 
-  margin-top: 5px;
-}
+          <div>
+            <span>Income</span>
+            <strong id="income">$0.00</strong>
+          </div>
 
-/* Budget */
+        </div>
 
-.limit {
-  color: rgba(255, 255, 255, 0.75);
-  font-size: 13px;
-  font-weight: 600;
+      </article>
 
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
+    </section>
 
-.limit-box {
-  display: flex;
-  align-items: center;
 
-  min-width: 150px;
+    <!-- Main Grid -->
+    <section class="main-grid">
 
-  padding: 11px 14px;
+      <!-- LEFT COLUMN -->
+      <div class="left-column">
 
-  border-radius: 12px;
+        <!-- Add Transaction -->
+        <section class="card">
 
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+          <div class="card-header">
+            <div>
+              <span class="section-number">01</span>
+              <h2>Add Transaction</h2>
+            </div>
+          </div>
 
-  color: white;
 
-  transition: 0.2s;
-}
+          <form id="transactionForm">
 
-.limit-box:focus-within {
-  background: rgba(255, 255, 255, 0.16);
-  border-color: rgba(255, 255, 255, 0.4);
-}
+            <!-- Type -->
+            <div class="type-toggle">
 
-.limit-box input {
-  width: 100%;
+              <label class="type-option expense-option">
+                <input
+                  type="radio"
+                  name="type"
+                  value="expense"
+                  checked
+                >
+                <span>💸 Expense</span>
+              </label>
 
-  border: 0;
-  outline: 0;
+              <label class="type-option income-option">
+                <input
+                  type="radio"
+                  name="type"
+                  value="income"
+                >
+                <span>💵 Income</span>
+              </label>
 
-  background: transparent;
+            </div>
 
-  color: white;
 
-  font-size: 16px;
-  font-weight: 700;
+            <!-- Amount -->
+            <div class="form-group">
 
-  margin-left: 4px;
-}
+              <label for="amount">Amount</label>
 
-/* Progress */
+              <div class="amount-input">
+                <span>$</span>
 
-.track {
-  position: relative;
-  z-index: 1;
+                <input
+                  id="amount"
+                  type="number"
+                  min="0.01"
+                  step="0.01"
+                  placeholder="0.00"
+                  required
+                >
+              </div>
 
-  height: 12px;
+            </div>
 
-  margin: 28px 0 15px;
 
-  overflow: hidden;
+            <!-- Category + Date -->
+            <div class="form-row">
 
-  background: rgba(255, 255, 255, 0.13);
+              <div class="form-group">
 
-  border-radius: 100px;
-}
+                <label for="category">Category</label>
 
-.fill {
-  height: 100%;
-  width: 0%;
+                <select id="category" required></select>
 
-  border-radius: inherit;
+              </div>
 
-  background: linear-gradient(
-    90deg,
-    #a78bfa,
-    #818cf8
-  );
 
-  transition: width 0.5s ease;
-}
+              <div class="form-group">
 
-/* Hero stats */
+                <label for="date">Date</label>
 
-.hero-stats {
-  position: relative;
-  z-index: 1;
+                <input
+                  id="date"
+                  type="date"
+                  required
+                >
 
-  display: flex;
-  justify-content: space-between;
+              </div>
 
-  color: rgba(255, 255, 255, 0.7);
+            </div>
 
-  font-size: 14px;
-}
 
-.hero-stats b {
-  color: white;
-  margin-left: 5px;
-}
+            <!-- Note -->
+            <div class="form-group">
 
-/* =========================
-   GRID
-   ========================= */
+              <label for="note">
+                Note
+                <span class="optional">(optional)</span>
+              </label>
 
-.grid {
-  display: grid;
+              <input
+                id="note"
+                type="text"
+                maxlength="50"
+                placeholder="e.g. Lunch, bus, books..."
+              >
 
-  grid-template-columns: 0.85fr 1.15fr;
+            </div>
 
-  gap: 24px;
 
-  align-items: start;
-}
+            <p
+              id="error"
+              class="error"
+              role="alert"
+              hidden
+            ></p>
 
-.stack {
-  display: grid;
-  gap: 24px;
-}
 
-/* =========================
-   CARDS
-   ========================= */
+            <button
+              type="submit"
+              class="primary-button"
+            >
+              <span>＋</span>
+              Add Transaction
+            </button>
 
-.card {
-  background: rgba(255, 255, 255, 0.92);
+          </form>
 
-  border: 1px solid var(--border);
+        </section>
 
-  border-radius: var(--radius);
 
-  padding: 25px;
+        <!-- Breakdown -->
+        <section class="card">
 
-  box-shadow: var(--shadow);
+          <div class="card-header">
+            <div>
+              <span class="section-number">02</span>
+              <h2>Spending Breakdown</h2>
+            </div>
+          </div>
 
-  backdrop-filter: blur(12px);
-}
+          <div id="breakdown" class="breakdown">
 
-.card h2 {
-  margin: 0 0 20px;
+            <div class="empty-state">
+              <div>📊</div>
+              <p>No expenses yet</p>
+              <small>Your spending categories will appear here.</small>
+            </div>
 
-  font-size: 18px;
-  font-weight: 700;
+          </div>
 
-  letter-spacing: -0.3px;
-}
+        </section>
 
-/* =========================
-   FORM
-   ========================= */
+      </div>
 
-form.card {
-  position: relative;
-}
 
-label {
-  display: block;
+      <!-- RIGHT COLUMN -->
+      <section class="card transactions-card">
 
-  margin-bottom: 8px;
+        <div class="transactions-header">
 
-  color: #475569;
+          <div>
+            <span class="section-number">03</span>
+            <h2>Transactions</h2>
+          </div>
 
-  font-size: 13px;
-  font-weight: 600;
-}
+          <span id="transactionCount" class="count">
+            0
+          </span>
 
-/* Inputs */
+        </div>
 
-input,
-select {
-  width: 100%;
 
-  height: 46px;
+        <!-- Filters -->
+        <div class="filters">
 
-  padding: 0 13px;
+          <select id="filterType">
+            <option value="all">All types</option>
+            <option value="expense">Expenses</option>
+            <option value="income">Income</option>
+          </select>
 
-  border: 1px solid var(--border);
+          <select id="filterCategory">
+            <option value="all">All categories</option>
+          </select>
 
-  border-radius: 11px;
+        </div>
 
-  background: var(--surface-soft);
 
-  color: var(--text);
+        <!-- List -->
+        <ul id="transactionList" class="transaction-list"></ul>
 
-  font-family: inherit;
 
-  font-size: 14px;
+        <!-- Footer -->
+        <div class="transactions-footer">
 
-  outline: none;
+          <div>
+            <span>Total income</span>
+            <strong id="footerIncome">$0.00</strong>
+          </div>
 
-  transition:
-    border-color 0.2s,
-    box-shadow 0.2s,
-    background 0.2s;
-}
+          <button
+            id="clearAll"
+            class="clear-button"
+            type="button"
+          >
+            Clear all
+          </button>
 
-input:hover,
-select:hover {
-  border-color: #d7dbea;
-}
+        </div>
 
-input:focus,
-select:focus {
-  background: white;
+      </section>
 
-  border-color: var(--primary);
+    </section>
 
-  box-shadow: 0 0 0 4px rgba(99, 91, 255, 0.1);
-}
+  </main>
 
-#amount {
-  font-size: 18px;
-  font-weight: 600;
-}
 
-/* =========================
-   TOGGLE
-   ========================= */
+  <!-- Toast -->
+  <div
+    id="toast"
+    class="toast"
+    aria-live="polite"
+  ></div>
 
-.toggle {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
 
-  padding: 4px;
+  <script src="script.js"></script>
 
-  margin-bottom: 20px;
-
-  border-radius: 12px;
-
-  background: #f1f3f8;
-}
-
-.toggle label {
-  position: relative;
-
-  margin: 0;
-
-  cursor: pointer;
-}
-
-.toggle input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.toggle span {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  height: 40px;
-
-  border-radius: 9px;
-
-  font-size: 13px;
-  font-weight: 700;
-
-  transition: 0.2s;
-}
-
-.toggle input:checked + .exp {
-  background: var(--red-soft);
-  color: var(--red);
-
-  box-shadow: 0 2px 8px rgba(224, 82, 82, 0.1);
-}
-
-.toggle input:checked + .inc {
-  background: var(--green-soft);
-  color: var(--green);
-
-  box-shadow: 0 2px 8px rgba(22, 166, 115, 0.1);
-}
-
-/* =========================
-   TWO COLUMN FORM
-   ========================= */
-
-.two {
-  display: grid;
-
-  grid-template-columns: 1fr 1fr;
-
-  gap: 14px;
-
-  margin-top: 16px;
-}
-
-#note {
-  margin-bottom: 4px;
-}
-
-/* =========================
-   BUTTON
-   ========================= */
-
-.primary {
-  width: 100%;
-
-  height: 48px;
-
-  margin-top: 18px;
-
-  border: 0;
-
-  border-radius: 12px;
-
-  background: linear-gradient(
-    135deg,
-    var(--primary),
-    #7c3aed
-  );
-
-  color: white;
-
-  font-family: inherit;
-
-  font-size: 14px;
-  font-weight: 700;
-
-  cursor: pointer;
-
-  box-shadow:
-    0 8px 18px rgba(99, 91, 255, 0.22);
-
-  transition:
-    transform 0.2s,
-    box-shadow 0.2s,
-    filter 0.2s;
-}
-
-.primary:hover {
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 12px 24px rgba(99, 91, 255, 0.3);
-
-  filter: brightness(1.03);
-}
-
-.primary:active {
-  transform: translateY(0);
-}
-
-/* =========================
-   ERROR
-   ========================= */
-
-.error {
-  margin: 10px 0 0;
-
-  padding: 10px 12px;
-
-  border-radius: 9px;
-
-  background: var(--red-soft);
-
-  color: var(--red);
-
-  font-size: 12px;
-  font-weight: 600;
-}
-
-/* =========================
-   BREAKDOWN
-   ========================= */
-
-#breakdown {
-  display: grid;
-  gap: 14px;
-}
-
-.breakdown-item {
-  display: grid;
-
-  grid-template-columns: 90px 1fr auto;
-
-  align-items: center;
-
-  gap: 12px;
-
-  font-size: 13px;
-}
-
-.breakdown-item .bar {
-  height: 7px;
-
-  overflow: hidden;
-
-  border-radius: 100px;
-
-  background: #edf0f5;
-}
-
-.breakdown-item .bar > div {
-  height: 100%;
-
-  border-radius: inherit;
-
-  background: linear-gradient(
-    90deg,
-    var(--primary),
-    #9b8cff
-  );
-}
-
-.breakdown-item strong {
-  font-size: 13px;
-}
-
-/* =========================
-   TRANSACTIONS HEADER
-   ========================= */
-
-.list-head {
-  display: flex;
-
-  justify-content: space-between;
-  align-items: center;
-
-  gap: 15px;
-
-  margin-bottom: 15px;
-}
-
-.list-head h2 {
-  margin: 0;
-}
-
-.filters {
-  display: flex;
-
-  gap: 8px;
-}
-
-.filters select {
-  width: auto;
-  min-width: 115px;
-
-  height: 38px;
-
-  padding: 0 10px;
-
-  font-size: 12px;
-}
-
-/* =========================
-   TRANSACTION LIST
-   ========================= */
-
-#list {
-  list-style: none;
-
-  padding: 0;
-  margin: 0;
-
-  display: grid;
-  gap: 8px;
-
-  max-height: 430px;
-
-  overflow-y: auto;
-}
-
-#list::-webkit-scrollbar {
-  width: 5px;
-}
-
-#list::-webkit-scrollbar-thumb {
-  background: #d9ddea;
-  border-radius: 10px;
-}
-
-/* Works with common transaction li structures */
-
-#list li {
-  display: flex;
-
-  justify-content: space-between;
-  align-items: center;
-
-  gap: 12px;
-
-  padding: 13px 14px;
-
-  border: 1px solid #edf0f5;
-
-  border-radius: 13px;
-
-  background: #fafbfc;
-
-  transition: 0.2s;
-}
-
-#list li:hover {
-  transform: translateX(2px);
-
-  background: white;
-
-  border-color: #e1e4ec;
-
-  box-shadow: 0 5px 15px rgba(30, 41, 59, 0.05);
-}
-
-/* =========================
-   LIST FOOTER
-   ========================= */
-
-.list-foot {
-  display: flex;
-
-  justify-content: space-between;
-  align-items: center;
-
-  gap: 10px;
-
-  margin-top: 18px;
-  padding-top: 16px;
-
-  border-top: 1px solid var(--border);
-
-  font-size: 12px;
-
-  color: var(--muted);
-}
-
-.pos {
-  color: var(--green);
-}
-
-/* =========================
-   CLEAR BUTTON
-   ========================= */
-
-.link {
-  border: 0;
-
-  padding: 5px 8px;
-
-  background: transparent;
-
-  color: var(--red);
-
-  font-family: inherit;
-
-  font-size: 12px;
-  font-weight: 600;
-
-  cursor: pointer;
-
-  border-radius: 7px;
-}
-
-.link:hover {
-  background: var(--red-soft);
-}
-
-/* =========================
-   EMPTY STATE
-   ========================= */
-
-.empty {
-  padding: 35px 15px;
-
-  text-align: center;
-
-  color: var(--muted);
-
-  font-size: 13px;
-}
-
-/* =========================
-   MOBILE
-   ========================= */
-
-@media (max-width: 850px) {
-  .wrap {
-    width: min(100% - 22px, 650px);
-
-    padding-top: 25px;
-  }
-
-  header {
-    display: block;
-
-    margin-bottom: 20px;
-  }
-
-  .hero {
-    padding: 23px;
-
-    border-radius: 22px;
-  }
-
-  .hero-top {
-    flex-direction: column;
-  }
-
-  .limit {
-    width: 100%;
-  }
-
-  .limit-box {
-    width: 100%;
-  }
-
-  .grid {
-    grid-template-columns: 1fr;
-
-    gap: 18px;
-  }
-
-  .stack {
-    gap: 18px;
-  }
-}
-
-/* =========================
-   SMALL PHONES
-   ========================= */
-
-@media (max-width: 520px) {
-  .wrap {
-    width: calc(100% - 18px);
-
-    padding-top: 18px;
-  }
-
-  header h1 {
-    font-size: 36px;
-  }
-
-  .hero {
-    padding: 20px;
-  }
-
-  .days {
-    font-size: 52px;
-  }
-
-  .card {
-    padding: 19px;
-
-    border-radius: 17px;
-  }
-
-  .two {
-    grid-template-columns: 1fr;
-  }
-
-  .list-head {
-    align-items: flex-start;
-
-    flex-direction: column;
-  }
-
-  .filters {
-    width: 100%;
-  }
-
-  .filters select {
-    flex: 1;
-    width: 50%;
-  }
-
-  .list-foot {
-    align-items: flex-start;
-
-    flex-direction: column;
-  }
-}
-
-/* =========================
-   DARK MODE
-   ========================= */
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0d111c;
-    --surface: #151a28;
-    --surface-soft: #1b2130;
-
-    --text: #f3f4f6;
-    --muted: #929bb0;
-
-    --border: #262d3d;
-
-    --primary-soft: #242044;
-  }
-
-  body {
-    background:
-      radial-gradient(
-        circle at top left,
-        #211d46 0,
-        transparent 30%
-      ),
-      var(--bg);
-  }
-
-  .card {
-    background: rgba(21, 26, 40, 0.92);
-    border-color: var(--border);
-  }
-
-  input,
-  select {
-    background: var(--surface-soft);
-    color: var(--text);
-    border-color: var(--border);
-  }
-
-  input:focus,
-  select:focus {
-    background: #202638;
-  }
-
-  .toggle {
-    background: #202638;
-  }
-
-  #list li {
-    background: #191f2d;
-    border-color: var(--border);
-  }
-
-  #list li:hover {
-    background: #202638;
-  }
-
-  .breakdown-item .bar {
-    background: #272e3d;
-  }
-
-  .list-foot {
-    border-color: var(--border);
-  }
-}
+</body>
+</html>
